@@ -1,0 +1,191 @@
+/* Estilos generales */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f7f7f7;
+    color: #333;
+    background-image: url('/barberia/imagenes/fondo.jpg'); /* Cambia esto por la ruta de tu imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    color: black;
+}
+
+/* Estilos de cabecera */
+header {
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+/* Sección de perfil */
+.perfil {
+    width: 90%;
+    max-width: 500px;
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.perfil h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.info-perfil label {
+    display: block;
+    margin: 0.5rem 0 0.3rem;
+    font-weight: bold;
+}
+
+.info-perfil input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.info-perfil button {
+    padding: 0.7rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+#editar {
+    background-color: black;
+    color: #fff;
+}
+
+#guardar {
+    background-color: black;
+    color: #fff;
+}
+
+/* Sección de historial de servicios */
+.historial-servicios {
+    width: 90%;
+    max-width: 500px;
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.historial-servicios h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+/* Tabla del historial */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 0.8rem;
+    text-align: center;
+}
+
+th {
+    background-color: #333;
+    color: white;
+}
+
+tfoot td {
+    font-weight: bold;
+    background-color: #f0f0f0;
+}
+
+/* Botones para agregar servicios */
+.historial-servicios button {
+    padding: 0.7rem 1.2rem;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-right: 0.5rem;
+    font-weight: bold;
+}
+ 
+.historial-servicios button:hover {
+    background-color: #5155599c;
+}
+
+/* Estilos de pie de página */
+footer {
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 0.5rem 0;
+    position: fixed;
+    bottom: 0;
+}
+button {
+    background-color: black; /* Color de fondo azul */
+    color: #fff; /* Color del texto en blanco */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 15px; /* Espaciado interno */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #5155599c; /* Color de fondo más oscuro al pasar el mouse */
+}
+
+.button {
+    background-color: black; /* Color de fondo azul */
+    color: white; /* Color del texto en blanco */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de la fuente */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: background-color 0.3s, transform 0.3s; /* Transiciones suaves */
+    display: block; /* Hacer que el botón sea un bloque */
+    margin: 20px auto; /* Margen automático para centrar */
+}
+
+.button:hover {
+    background-color: #5155599c; /* Color de fondo más oscuro al pasar el mouse */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+}
+
+.buttom:active {
+    transform: scale(0.95); /* Disminuye ligeramente el tamaño al hacer clic */
+}

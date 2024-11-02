@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cita - Barbería</title>
+    <link rel="stylesheet" href="/barberia/Frontend/css/cita.css"> <!-- Asegúrate de tener este enlace a tu archivo CSS -->
+</head>
+<body>
+    <header>
+        <h1>Agendar Cita</h1>
+    </header>
+    
+    <main>
+        <section class="cita-form">
+            <h2>Selecciona tu cita</h2>
+
+            <div id="mensaje-advertencia" style="display: none; color: red;">
+                Debes iniciar sesión para agendar una cita.
+            </div>
+
+            <label for="servicio">Servicio:</label>
+            <select id="servicio" name="servicio">
+                <option value="" disabled selected>--Seleccionar servicio--</option>
+                <option value="Corte de cabello">Corte de cabello</option>
+                <option value="Afeitado">Afeitado</option>
+                <option value="Mascarilla">Mascarilla</option>
+            </select>
+
+            <label for="dia">Día:</label>
+            <select id="dia" name="dia">
+                <option value="" disabled selected>--Seleccionar día--</option>
+                <!-- Opciones se llenarán aquí -->
+            </select>
+
+            <label for="hora">Hora:</label>
+            <select id="hora" name="hora">
+                <option value="" disabled selected>--Seleccionar hora--</option>
+                <!-- Opciones se llenarán aquí -->
+            </select>
+
+            <button id="confirmar" onclick="confirmarCita()">Confirmar Cita</button>
+            <button class="button" onclick="window.location.href='/barberia/Frontend/web/inicio.html'">Regresar</button>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Barbería. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Datos de ejemplo, puedes obtener esto desde tu base de datos
+        const diasDisponibles = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+        const horasDisponibles = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00'];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const diaSelect = document.getElementById('dia');
+            const horaSelect = document.getElementById('hora');
+
+            // Llenar el select de días
+            diasDisponibles.forEach(dia => {
+                const option = document.createElement('option');
+                option.value = dia;
+                option.textContent = dia;
+                diaSelect.appendChild(option);
+            });
+
+            // Llenar el select de horas
+            horasDisponibles.forEach(hora => {
+                const option = document.createElement('option');
+                option.value = hora;
+                option.textContent = hora;
+                horaSelect.appendChild(option);
+            });
+        });
+
+        // Función para confirmar la cita
+        function confirmarCita() {
+            const dia = document.getElementById('dia').value;
+            const hora = document.getElementById('hora').value;
+            
+            // Aquí puedes agregar la lógica para enviar la cita a la base de datos
+            alert(`Cita confirmada para el ${dia} a las ${hora}.`);
+        }
+    </script>
+
+    <!-- Añadir esta parte a cita.html para cargar los horarios disponibles -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        cargarHorariosDisponibles();
+    });
+
+    function cargarHorariosDisponibles() {
+        fetch('cargar_horarios.php')
+            .then(response => response.json())
+            .then(data => {
+                const selectHorario = document.getElementById("horario");
+                selectHorario.innerHTML = ''; // Limpiar opciones anteriores
+
+                data.forEach(horario => {
+                    const option = document.createElement("option");
+                    option.value = horario.hora;
+                    option.textContent = `${horario.dia} - ${horario.hora}`;
+                    selectHorario.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
+
+</body>
+</html>

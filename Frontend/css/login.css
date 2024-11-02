@@ -1,0 +1,126 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #4a90e2, #50e3c2);
+    background-image: url('/barberia/imagenes/fondo.jpg'); /* Reemplaza con la ruta de tu imagen */
+    background-size: cover; /* Hace que la imagen cubra todo el fondo */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+.container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 400px;
+    padding: 30px 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Botón Iniciar Sesión arriba de los cuadros de texto */
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: black;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+    margin-bottom: 20px;
+}
+
+button[type="submit"]:hover {
+    background-color: #5155599c;
+    box-shadow: 0 6px 16px rgba(74, 144, 226, 0.5);
+}
+
+/* Cuadros de texto debajo del botón de iniciar sesión */
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #50e3c2;
+    box-shadow: 0 0 8px rgba(80, 227, 194, 0.3);
+    outline: none;
+}
+
+/* Texto de registro debajo del botón de iniciar sesión */
+p {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 15px;
+}
+
+p a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+p a:hover {
+    color: #5155599c;
+    text-decoration: underline;
+}
+
+/* Botón Omitir al final */
+button.omitir {
+    background-color: black;
+    color: white;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(80, 227, 194, 0.4);
+}
+
+button.omitir:hover {
+    background-color: #5155599c;
+    box-shadow: 0 6px 16px rgba(80, 227, 194, 0.5);
+}
