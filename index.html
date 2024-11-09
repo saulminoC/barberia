@@ -4,23 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Barbería</title>
-    <link rel="stylesheet" href="/barberia/Frontend/css/login.css"> <!-- Enlace a tu archivo CSS -->
+    <link rel="stylesheet" href="Frontend/css/login.css"> <!-- Enlace a tu archivo CSS -->
 </head>
 <body>
 
 <div class="container">
     <h2>Iniciar Sesión</h2>
     <!-- Formulario de entrada -->
-    <form>
-        <input type="email" placeholder="Correo electrónico" required>
-        <input type="password" placeholder="Contraseña" required>
+    <form action="/barberia/Backend/login.php" method="POST">
+        <input type="email" name="email" placeholder="Correo electrónico" required>
+        <input type="password" name="password" placeholder="Contraseña" required>
+        <button type="submit">Iniciar sesión</button>
     </form>
-    <button type="submit">Iniciar sesión</button>
+    <br>
     <!-- Enlace de registro debajo del botón -->
-    <p>¿No tienes cuenta? <a href="/barberia/Frontend/web/registro.html">Regístrate</a></p>
-    
-    <!-- Botón de omitir al final -->
-    <button class="omitir" onclick="window.location.href='/barberia/Frontend/web/inicio.html'">Omitir</button>
+    <p>¿No tienes cuenta? <a href="frontend/web/registro.html">Regístrate</a></p>
 </div>
 
 </body>

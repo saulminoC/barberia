@@ -3,7 +3,7 @@ body {
     background-color: #f4f4f4;
     margin: 0;
     padding: 20px;
-    background-image: url('/barberia/imagenes/fondo.jpg'); /* Cambia esto por la ruta de tu imagen de fondo */
+    background-image: url('../../imagenes/fondo.jpg'); /* Cambia esto por la ruta de tu imagen de fondo */
     background-size: cover;
     background-position: center;
     color: black;
@@ -71,5 +71,16 @@ button:hover {
 
 .buttom:active {
     transform: scale(0.95); /* Disminuye ligeramente el tamaño al hacer clic */
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #333;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin-top: 20px;
 }
 

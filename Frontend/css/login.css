@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -12,7 +11,7 @@ body {
     height: 100vh;
     font-family: 'Roboto', sans-serif;
     background: linear-gradient(135deg, #4a90e2, #50e3c2);
-    background-image: url('/barberia/imagenes/fondo.jpg'); /* Reemplaza con la ruta de tu imagen */
+    background-image: url('../../imagenes/fondo.jpg'); /* Reemplaza con la ruta de tu imagen */
     background-size: cover; /* Hace que la imagen cubra todo el fondo */
     background-position: center; /* Centra la imagen */
     background-repeat: no-repeat; /* Evita que la imagen se repita */

@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Citas</title>
-    <link rel="stylesheet" href="/barberia/Frontend/css/admin_cita.css">
+    <link rel="stylesheet" href="../css/admin_cita.css">
+    <!--<script src="http://localhost:8012/barberia/Frontend/js/cita.js"></script> -->
 </head>
 <body>
     <header>
@@ -60,9 +61,7 @@
                 <tbody>
                     <!-- Las citas se agregarán aquí -->
                 </tbody>
-                
             </table>
-            
         </article>
         <button class="button" onclick="window.location.href='/barberia/Frontend/web/inicio.html'">Regresar</button>
     </main>
@@ -82,6 +81,9 @@
             const hora = document.getElementById("hora").value;
             const mensajeDiv = document.getElementById("mensaje");
 
+            console.log("Día seleccionado: ", dia);
+            console.log("Hora seleccionada: ", hora);
+
             if (!dia || !hora) {
                 mensajeDiv.textContent = "Por favor, selecciona un día y una hora.";
                 mensajeDiv.style.color = "red"; // Mensaje de error en rojo
@@ -89,21 +91,32 @@
             }
 
             // Enviar datos al servidor usando AJAX
-            fetch('guardar_disponibilidad.php', {
+            console.log("Enviando datos al backend:", JSON.stringify({ dia: dia, hora: hora }));
+
+            fetch('http://localhost/barberia/Backend/guardar_disponibilidad.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ dia: dia, hora: hora })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    mensajeDiv.textContent = "Disponibilidad guardada correctamente.";
-                    mensajeDiv.style.color = "green"; // Mensaje de éxito en verde
-                    // Actualizar la tabla de citas registradas
-                    agregarCitaATabla("Nombre Ejemplo", "correo@ejemplo.com", dia, hora);
-                } else {
+            .then(response => response.text()) // Obtener la respuesta como texto
+            .then(text => {
+                console.log('Respuesta del servidor:', text); // Ver la respuesta completa
+                try {
+                    const data = JSON.parse(text); // Intentar analizar la respuesta como JSON
+                    console.log('Datos JSON recibidos:', data);
+                    if (data.success) {
+                        mensajeDiv.textContent = "Disponibilidad guardada correctamente.";
+                        mensajeDiv.style.color = "green"; // Mensaje de éxito en verde
+                        // Actualizar la tabla de citas registradas
+                        agregarCitaATabla("Nombre Ejemplo", "correo@ejemplo.com", dia, hora);
+                    } else {
+                        mensajeDiv.textContent = "Error al guardar la disponibilidad.";
+                        mensajeDiv.style.color = "red"; // Mensaje de error en rojo
+                    }
+                } catch (error) {
+                    console.error('Error al analizar la respuesta JSON:', error);
                     mensajeDiv.textContent = "Error al guardar la disponibilidad.";
                     mensajeDiv.style.color = "red"; // Mensaje de error en rojo
                 }

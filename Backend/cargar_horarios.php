@@ -1,29 +1,37 @@
 <?php
-$servername = "localhost"; // Cambia según tu configuración
-$username = "tu_usuario"; // Cambia según tu configuración
-$password = "tu_contraseña"; // Cambia según tu configuración
-$dbname = "tu_base_de_datos"; // Cambia según tu configuración
+header('Content-Type: application/json');
 
-// Crear conexión
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "barberia_db";
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar conexión
 if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+    die(json_encode(['success' => false, 'message' => 'Conexión fallida: ' . $conn->connect_error]));
 }
 
-// Consulta para obtener horarios disponibles
 $sql = "SELECT dia, hora FROM horario_disponible";
 $result = $conn->query($sql);
 
-$horarios = [];
+$dias = [];
+$horas = [];
+
 if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $horarios[] = $row;
+    while ($row = $result->fetch_assoc()) {
+        // Agrega solo valores únicos a los arrays
+        if (!in_array($row['dia'], $dias)) {
+            $dias[] = $row['dia'];
+        }
+        if (!in_array($row['hora'], $horas)) {
+            $horas[] = $row['hora'];
+        }
     }
 }
 
-echo json_encode($horarios);
+// Estructura JSON con 'dias' y 'horas'
+echo json_encode(['dias' => $dias, 'horas' => $horas]);
 
 $conn->close();
 ?>
