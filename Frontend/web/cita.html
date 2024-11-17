@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cita - Barbería</title>
-    <link rel="stylesheet" href="../css/cita.css"> <!-- Asegúrate de tener este enlace a tu archivo CSS -->
+    <title>Agendar Cita</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../css/cita.css">
 </head>
 <body>
     <header>
@@ -15,6 +16,7 @@
         <section class="cita-form">
             <h2>Selecciona tu cita</h2>
 
+            <!-- Advertencia si no se está logueado -->
             <div id="mensaje-advertencia" style="display: none; color: red;">
                 Debes iniciar sesión para agendar una cita.
             </div>
@@ -30,13 +32,13 @@
             <label for="dia">Día:</label>
             <select id="dia" name="dia">
                 <option value="" disabled selected>--Seleccionar día--</option>
-                <!-- Opciones se llenarán aquí -->
+                <!-- Los días se cargarán dinámicamente -->
             </select>
 
             <label for="hora">Hora:</label>
             <select id="hora" name="hora">
                 <option value="" disabled selected>--Seleccionar hora--</option>
-                <!-- Opciones se llenarán aquí -->
+                <!-- Las horas disponibles se cargarán dinámicamente -->
             </select>
 
             <button id="confirmar" onclick="confirmarCita()">Confirmar Cita</button>
@@ -48,54 +50,6 @@
         <p>&copy; 2024 Barbería. Todos los derechos reservados.</p>
     </footer>
 
-    <script>
-        // Cargar días y horas disponibles desde el servidor
-        function cargarHorariosDisponibles() {
-            fetch('/BARBERIA/Backend/cargar_horarios.php')
-                .then(response => response.json())
-                .then(data => {
-                    const diaSelect = document.getElementById("dia");
-                    const horaSelect = document.getElementById("hora");
-
-                    diaSelect.innerHTML = '<option value="" disabled selected>--Seleccionar día--</option>';
-                    horaSelect.innerHTML = '<option value="" disabled selected>--Seleccionar hora--</option>';
-
-                    // Llenar el select de días y horas con los datos recibidos
-                    data.dias.forEach(dia => {
-                        const option = document.createElement("option");
-                        option.value = dia;
-                        option.textContent = dia;
-                        diaSelect.appendChild(option);
-                    });
-
-                    data.horas.forEach(hora => {
-                        const option = document.createElement("option");
-                        option.value = hora;
-                        option.textContent = hora;
-                        horaSelect.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error al cargar horarios:', error);
-                });
-        }
-
-        // Llamar a cargarHorariosDisponibles al cargar la página
-        document.addEventListener("DOMContentLoaded", cargarHorariosDisponibles);
-
-        // Función para confirmar la cita
-        function confirmarCita() {
-            const dia = document.getElementById('dia').value;
-            const hora = document.getElementById('hora').value;
-            
-            if (!dia || !hora) {
-                alert('Por favor selecciona el día y la hora de tu cita.');
-                return;
-            }
-
-            alert(`Cita confirmada para el ${dia} a las ${hora}.`);
-            // Aquí puedes agregar lógica para enviar la cita a la base de datos si es necesario
-        }
-    </script>
+    <script src="../js/cita.js"></script>
 </body>
 </html>

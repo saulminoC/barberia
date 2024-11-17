@@ -11,7 +11,7 @@
 <div class="container">
     <h2>Iniciar Sesión</h2>
     <!-- Formulario de entrada -->
-    <form action="/barberia/Backend/login.php" method="POST">
+    <form id="loginForm">
         <input type="email" name="email" placeholder="Correo electrónico" required>
         <input type="password" name="password" placeholder="Contraseña" required>
         <button type="submit">Iniciar sesión</button>
@@ -19,7 +19,42 @@
     <br>
     <!-- Enlace de registro debajo del botón -->
     <p>¿No tienes cuenta? <a href="frontend/web/registro.html">Regístrate</a></p>
+    
+    <button class="omitir" onclick="window.location.href='/barberia/Frontend/web/inicio.html'">Omitir</button>
 </div>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evita el envío tradicional del formulario
+
+    const formData = new FormData(event.target);
+
+    fetch('/barberia/Backend/login.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Almacena el usuarioId en localStorage
+            localStorage.setItem("usuarioId", data.usuarioId);
+
+            // Redirige según el rol del usuario
+            if (data.rol === 'administrador') {
+                window.location.href = 'Frontend/web/admin_cita.html';
+            } else {
+                window.location.href = 'Frontend/web/inicio.html';
+            }
+        } else {
+            alert(data.message); // Muestra un mensaje de error si el inicio de sesión falla
+        }
+    })
+    .catch(error => {
+        console.error('Error en la solicitud:', error);
+        alert('Error en la solicitud.');
+    });
+});
+</script>
 
 </body>
 </html>

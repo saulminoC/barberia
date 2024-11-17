@@ -11,13 +11,15 @@
 <div class="container">
     <h2>Registro de Cuenta</h2>
 
-    <form>
-        <input type="text" placeholder="Nombre completo" required>
-        <input type="email" placeholder="Correo electrónico" required>
-        <input type="password" placeholder="Contraseña" required>
-        <input type="password" placeholder="Confirmar contraseña" required>
+    <form method="POST" action="/barberia/Backend/registro.php">
+        <input type="text" name="nombre" placeholder="Nombre completo" required>
+        <input type="email" name="email" placeholder="Correo electrónico" required>
+        <input type="password" name="password" placeholder="Contraseña" required>
+        <input type="password" name="confirm_password" placeholder="Confirmar contraseña" required>
         <button type="submit">Registrarse</button>
     </form>
+    
+    
 
     <p>¿Ya tienes cuenta? <a href="../index.html">Inicia sesión</a></p>
 

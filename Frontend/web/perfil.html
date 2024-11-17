@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil de Usuario</title>
+    <script src="../js/perfil.js"></script>
     <link rel="stylesheet" href="../css/perfil.css">
 </head>
 <body>
@@ -15,13 +16,10 @@
         <section class="perfil">
             <div class="info-perfil">
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" disabled value="Nombre del Usuario">
+                <input type="text" id="nombre" disabled value="">
 
                 <label for="correo">Correo:</label>
-                <input type="email" id="correo" disabled value="correo@ejemplo.com">
-
-                <button id="editar" onclick="habilitarEdicion()">Editar Información</button>
-                <button id="guardar" onclick="guardarCambios()" style="display: none;">Guardar Cambios</button>
+                <input type="email" id="correo" disabled value="">
             </div>
         </section>
 
@@ -53,59 +51,78 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Cargar datos guardados previamente
-            document.getElementById("nombre").value = localStorage.getItem("clienteNombre") || "Nombre del Usuario";
-            document.getElementById("correo").value = localStorage.getItem("clienteCorreo") || "correo@ejemplo.com";
-        
+            // Cargar datos guardados previamente desde la base de datos
+            cargarDatosUsuario();
             // Cargar historial de servicios en la tabla
             cargarHistorialServicios();
         });
 
-        function habilitarEdicion() {
-            document.getElementById("nombre").disabled = false;
-            document.getElementById("correo").disabled = false;
-            document.getElementById("guardar").style.display = "inline";
-            document.getElementById("editar").style.display = "none";
-        }
+        function cargarDatosUsuario() {
+            const usuarioId = localStorage.getItem("usuarioId"); // Obtener el usuarioId desde el almacenamiento local
 
-        function guardarCambios() {
-            const nombre = document.getElementById("nombre").value;
-            const correo = document.getElementById("correo").value;
-        
-            // Guardar en localStorage
-            localStorage.setItem("clienteNombre", nombre);
-            localStorage.setItem("clienteCorreo", correo);
+            if (!usuarioId) {
+                alert('No se ha encontrado el ID de usuario.');
+                return;
+            }
 
-            document.getElementById("nombre").disabled = true;
-            document.getElementById("correo").disabled = true;
-            document.getElementById("guardar").style.display = "none";
-            document.getElementById("editar").style.display = "inline";
-
-            alert("Cambios guardados correctamente.");
+            fetch('/barberia/Backend/cargar_perfil.php?id=' + usuarioId)  // Pasar el ID como parámetro en la URL
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert('Error al cargar los datos del usuario: ' + data.error);
+                        return;
+                    }
+                    document.getElementById("nombre").value = data.nombre;
+                    document.getElementById("correo").value = data.email;
+                })
+                .catch(error => {
+                    console.error('Error al cargar los datos del usuario:', error);
+                    alert('Error al cargar los datos del usuario.');
+                });
         }
 
         function cargarHistorialServicios() {
-            const historialServicios = JSON.parse(localStorage.getItem("historialServicios")) || [
-                { servicio: "Corte de Cabello", precio: 100 },
-                { servicio: "Afeitado", precio: 150 },
-                { servicio: "Mascarilla", precio: 200 }
-            ];
-
-            const tabla = document.querySelector("#tablaHistorial tbody");
-            tabla.innerHTML = "";
-
-            let total = 0;
-            historialServicios.forEach(servicio => {
-                const fila = document.createElement("tr");
-                fila.innerHTML = `
-                    <td>${servicio.servicio}</td>
-                    <td>$${servicio.precio}</td>
-                `;
-                tabla.appendChild(fila);
-                total += servicio.precio;
-            });
-            
-            document.getElementById("totalGastado").textContent = `$${total}`;
+            const usuarioId = localStorage.getItem("usuarioId"); // Obtener el usuarioId desde el almacenamiento local
+        
+            if (!usuarioId) {
+                alert('No se ha encontrado el ID de usuario.');
+                return;
+            }
+        
+            fetch('/barberia/Backend/cargar_historial.php?id=' + localStorage.getItem('usuarioId'))
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la respuesta del servidor');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Respuesta del servidor:', data);  // Verifica qué contiene la respuesta
+                    if (data.error) {
+                        alert('Error al cargar el historial de servicios: ' + data.error);
+                        return;
+                    }
+        
+                    const tabla = document.querySelector("#tablaHistorial tbody");
+                    tabla.innerHTML = "";
+                    let total = 0;
+        
+                    data.servicios.forEach(servicio => {
+                        const fila = document.createElement("tr");
+                        fila.innerHTML = `
+                            <td>${servicio.nombre}</td>
+                            <td>$${servicio.precio}</td>
+                        `;
+                        tabla.appendChild(fila);
+                        total += parseFloat(servicio.precio);
+                    });
+        
+                    document.getElementById("totalGastado").textContent = `$${total.toFixed(2)}`;
+                })
+                .catch(error => {
+                    console.error('Error al cargar el historial de servicios:', error);
+                    alert('Error al cargar el historial de servicios: ' + error.message);
+                });
         }
     </script>
 </body>

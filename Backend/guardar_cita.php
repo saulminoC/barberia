@@ -16,22 +16,24 @@ if (!$data) {
     die(json_encode(['success' => false, 'message' => 'Datos no válidos.']));
 }
 
+$servicio = $data['servicio'] ?? '';
 $dia = $data['dia'] ?? '';
 $hora = $data['hora'] ?? '';
+$usuario_id = $data['usuario_id'] ?? '';
 
-if (empty($dia) || empty($hora)) {
-    echo json_encode(['success' => false, 'message' => 'Día u hora no proporcionados.']);
+if (empty($servicio) || empty($dia) || empty($hora) || empty($usuario_id)) {
+    echo json_encode(['success' => false, 'message' => 'Datos incompletos.']);
     exit;
 }
 
-// Guardar la disponibilidad
-$stmt = $conn->prepare("INSERT INTO horario_disponible (dia, hora) VALUES (?, ?)");
-$stmt->bind_param("ss", $dia, $hora);
+// Insertar la cita
+$stmt = $conn->prepare("INSERT INTO citas (servicio, dia, hora, usuario_id) VALUES (?, ?, ?, ?)");
+$stmt->bind_param("sssi", $servicio, $dia, $hora, $usuario_id);
 
 if ($stmt->execute()) {
-    echo json_encode(['success' => true, 'message' => 'Disponibilidad guardada correctamente.']);
+    echo json_encode(['success' => true, 'message' => 'Cita reservada correctamente.']);
 } else {
-    echo json_encode(['success' => false, 'message' => 'Error al guardar la disponibilidad.']);
+    echo json_encode(['success' => false, 'message' => 'Error al guardar la cita.']);
 }
 
 $stmt->close();
